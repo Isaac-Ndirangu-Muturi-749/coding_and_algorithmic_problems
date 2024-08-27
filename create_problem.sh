@@ -23,7 +23,9 @@ touch "$base_dir/solution.py"
 touch "$base_dir/test_cases.py"
 
 # Add a basic structure to README.md
+echo "```" > "$base_dir/README.md"
 echo "### Name: $problem_name, Type: $problem_type, Problem: problem.md, Solution: solution.py, Tests: test_cases.py" > "$base_dir/README.md"
+echo "```" > "$base_dir/README.md"
 
 
 # Add a basic structure to problem.md
@@ -32,8 +34,6 @@ echo "```" > "$base_dir/problem.md"
 echo "" > "$base_dir/problem.md"
 echo "" > "$base_dir/problem.md"
 echo "```" > "$base_dir/problem.md"
-
-
 
 
 # Add a basic structure to solution.py
