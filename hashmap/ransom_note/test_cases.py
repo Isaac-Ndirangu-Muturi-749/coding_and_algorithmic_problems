@@ -1,3 +1,5 @@
+from solution import Solution
+
 solution = Solution()
 
 # Test case 1
