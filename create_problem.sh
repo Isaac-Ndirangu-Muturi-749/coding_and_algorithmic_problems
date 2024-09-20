@@ -6,8 +6,8 @@ if [ "$#" -ne 2 ]; then
     exit 1
 fi
 
-# Capture inputs
-problem_type=$1
+# Capture inputs and remove any trailing slash from problem_type
+problem_type=${1%/}
 problem_name=$2
 
 # Define the base directory for the problem
@@ -21,7 +21,6 @@ touch "$base_dir/README.md"
 touch "$base_dir/problem.md"
 touch "$base_dir/solution.py"
 touch "$base_dir/test_cases.py"
-
 
 # Add a basic structure to problem.md
 echo "# Problem Statement: $problem_name" > "$base_dir/problem.md"
@@ -48,4 +47,5 @@ echo "    run_tests()" >> "$base_dir/test_cases.py"
 # Feedback to user
 echo "Directory and files created successfully at $base_dir."
 
-cd $base_dir
+# Change directory to the created base_dir
+cd "$base_dir"
