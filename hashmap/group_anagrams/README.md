@@ -130,3 +130,56 @@ def groupAnagrams(strs: list[str]) -> list[list[str]]:
 
 ### Space Complexity:
 - The space complexity is \(O(n \cdot k)\) for storing the original strings in the dictionary, along with the space for the frequency lists (though they are reused for each string).
+
+The statement `from collections import defaultdict` imports the `defaultdict` class from the `collections` module in Python. Here's a breakdown of what `defaultdict` is and how it works:
+
+### What is `defaultdict`?
+
+`defaultdict` is a subclass of the built-in `dict` class. It overrides one method to provide a default value for a nonexistent key, eliminating the need for key existence checks and handling `KeyError` exceptions.
+
+### Key Features
+
+1. **Default Value**: When you try to access or modify a key that does not exist, `defaultdict` automatically creates that key with a default value, which you define when you create the `defaultdict`.
+
+2. **Flexible Types**: You can specify any callable (like `int`, `list`, `set`, etc.) as the default factory, allowing you to easily create lists, sets, or other data structures without initializing them manually.
+
+### Example Usage
+
+Here’s an example to illustrate how `defaultdict` works:
+
+```python
+from collections import defaultdict
+
+# Create a defaultdict with list as the default factory
+my_dict = defaultdict(list)
+
+# Add some values
+my_dict['fruits'].append('apple')
+my_dict['fruits'].append('banana')
+my_dict['vegetables'].append('carrot')
+
+print(my_dict)
+```
+
+### Output
+
+```python
+defaultdict(<class 'list'>, {
+    'fruits': ['apple', 'banana'],
+    'vegetables': ['carrot']
+})
+```
+
+### Explanation of the Example
+
+1. **Initialization**: `my_dict` is initialized as a `defaultdict` with `list` as the default factory. This means that if you access a key that doesn't exist, it will create a new list for that key.
+
+2. **Adding Items**:
+   - When you call `my_dict['fruits'].append('apple')`, the key `'fruits'` doesn't exist yet, so `defaultdict` automatically creates an empty list for it before appending `'apple'`.
+   - The same happens for `'banana'` and `'carrot'` under their respective keys.
+
+3. **No Key Errors**: Unlike a regular dictionary, you don’t need to check if the key exists before adding items, making your code cleaner and less error-prone.
+
+### Summary
+
+Using `defaultdict` is particularly useful for grouping data, counting occurrences, or creating nested dictionaries without the need for initialization checks. It simplifies many common tasks in data processing and manipulation.
