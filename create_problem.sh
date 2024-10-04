@@ -18,16 +18,8 @@ mkdir -p "$base_dir"
 
 # Create the necessary files
 touch "$base_dir/README.md"
-touch "$base_dir/problem.md"
 touch "$base_dir/solution.py"
 touch "$base_dir/test_cases.py"
-
-# Add a basic structure to problem.md
-echo "# Problem Statement: $problem_name" > "$base_dir/problem.md"
-echo '```' >> "$base_dir/problem.md"
-echo "" >> "$base_dir/problem.md"
-echo "" >> "$base_dir/problem.md"
-echo '```' >> "$base_dir/problem.md"
 
 # Add a basic structure to solution.py
 echo "class Solution:" > "$base_dir/solution.py"
@@ -47,5 +39,3 @@ echo "    run_tests()" >> "$base_dir/test_cases.py"
 # Feedback to user
 echo "Directory and files created successfully at $base_dir."
 
-# Change directory to the created base_dir
-cd "$base_dir"
