@@ -26,5 +26,16 @@ echo "class Solution:" > "$base_dir/solution.py"
 echo "    def your_method(self):" >> "$base_dir/solution.py"
 echo "        pass" >> "$base_dir/solution.py"
 
+# Add a basic structure to test_cases.py
+echo "from solution import Solution" > "$base_dir/test_cases.py"
+echo "" >> "$base_dir/test_cases.py"
+echo "def run_tests():" >> "$base_dir/test_cases.py"
+echo "    solution = Solution()" >> "$base_dir/test_cases.py"
+echo "    # Add your test cases here" >> "$base_dir/test_cases.py"
+echo "" >> "$base_dir/test_cases.py"
+echo "if __name__ == '__main__':" >> "$base_dir/test_cases.py"
+echo "    run_tests()" >> "$base_dir/test_cases.py"
+
 # Feedback to user
 echo "Directory and files created successfully at $base_dir."
+
