@@ -19,7 +19,6 @@ mkdir -p "$base_dir"
 # Create the necessary files
 touch "$base_dir/README.md"
 touch "$base_dir/solution.py"
-touch "$base_dir/test_cases.py"
 
 # Add a basic structure to solution.py
 echo "class Solution:" > "$base_dir/solution.py"
