@@ -105,7 +105,7 @@ This approach guarantees the **minimum cost** while efficiently processing valid
 
 
 
-### **Refactored Code with Improved Variable Naming**
+### other**
 ```python
 from collections import defaultdict
 from typing import List
@@ -119,16 +119,20 @@ class Solution:
 
         # Build the graph for valid jumps based on increasing sequence rule
         for i in range(n - 1, -1, -1):
+            # Ensure stack elements are greater than the current element
             while increasing_stack and nums[increasing_stack[-1]] < nums[i]:
                 increasing_stack.pop()
+            # If stack not empty, make a connection in graph
             if increasing_stack:
                 adjacency_list[i].append(increasing_stack[-1])
             increasing_stack.append(i)
 
         # Build the graph for valid jumps based on decreasing sequence rule
         for i in range(n - 1, -1, -1):
+            # Ensure stack elements are greater than or equal to the current element
             while decreasing_stack and nums[decreasing_stack[-1]] >= nums[i]:
                 decreasing_stack.pop()
+            # If stack not empty, make a connection in graph
             if decreasing_stack:
                 adjacency_list[i].append(decreasing_stack[-1])
             decreasing_stack.append(i)
@@ -177,6 +181,25 @@ This step ensures **we always take the least expensive path**.
 
 Thus, the overall complexity is **O(n)**, making this approach **efficient for large inputs** (`n ≤ 100,000`).
 
+Time Complexity
+The time complexity of the code can be analyzed by examining the two main parts of the algorithm: graph construction and dynamic programming.
+
+Graph Construction: There are two similar loops that iterate backward through the input list nums, from n - 1 to 0. Each loop performs a constant amount of work for each element by comparing against elements in a stack and updating the graph g. The worst-case time complexity for each of these loops is O(n), because each element is pushed to and popped from the stack at most once.
+
+Dynamic Programming: After building the graph, the algorithm iterates over each element in the list nums and updates the minimum cost for each connected node. Since each node can have at most two connections (because in the worst case, there’s a connection to the next greater element and next smaller or equal element), and there are n nodes, the loop iterates at most 2n times. Within this loop, the cost calculation is constant time.
+
+Combining both parts, the total time complexity of the entire algorithm is O(n + 2n), which simplifies to O(n).
+
+Space Complexity
+The space complexity is determined by the additional space required for the data structures used in the algorithm:
+
+Graph Representation (g): The graph g is represented using a defaultdict of lists, which can potentially contain up to 2n edges (in the form of list items), where n is the number of elements in the input list nums.
+
+Stacks (stk): Two stacks are used in the graph construction, and each can contain up to n indices at any one time.
+
+Dynamic Programming Array (f): A list f of length n is used to store the minimum cost up to that point.
+
+Taking all these into consideration, the space complexity is O(n + 2n + n), which simplifies to O(n) since constants are dropped in Big O notation.
 ---
 
 ### **Example Walkthrough**

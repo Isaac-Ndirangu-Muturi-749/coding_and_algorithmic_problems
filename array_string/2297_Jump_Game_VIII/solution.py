@@ -1,41 +1,40 @@
-from heapq import heappop, heappush
-from collections import deque
+from collections import defaultdict
+from typing import List
 
 class Solution:
-    def minCost(self, nums: list[int], costs: list[int]) -> int:
+    def minCost(self, nums: List[int], costs: List[int]) -> int:
         n = len(nums)
-        min_cost = [float('inf')] * n  # Store min cost to reach each index
-        min_cost[0] = 0  # Cost to reach index 0 is 0
-        pq = [(0, 0)]  # (current cost, index)
+        adjacency_list = defaultdict(list)  # Stores valid jumps from each index
+        increasing_stack = []  # Monotonic increasing stack
+        decreasing_stack = []  # Monotonic decreasing stack
 
-        # Maintain two monotonic stacks to find valid jumps efficiently
-        increasing_stack = deque()  # Monotonic increasing
-        decreasing_stack = deque()  # Monotonic decreasing
-
-        while pq:
-            current_cost, i = heappop(pq)
-
-            if i == n - 1:
-                return current_cost  # Found the minimum cost to reach the last index
-
-            # Process increasing valid jumps
+        # Build the graph for valid jumps based on increasing sequence rule
+        for i in range(n - 1, -1, -1):
+            # Ensure stack elements are greater than the current element
             while increasing_stack and nums[increasing_stack[-1]] < nums[i]:
-                j = increasing_stack.pop()
-                new_cost = current_cost + costs[j]
-                if new_cost < min_cost[j]:
-                    min_cost[j] = new_cost
-                    heappush(pq, (new_cost, j))
-
+                increasing_stack.pop()
+            # If stack not empty, make a connection in graph
+            if increasing_stack:
+                adjacency_list[i].append(increasing_stack[-1])
             increasing_stack.append(i)
 
-            # Process decreasing valid jumps
+        # Build the graph for valid jumps based on decreasing sequence rule
+        for i in range(n - 1, -1, -1):
+            # Ensure stack elements are greater than or equal to the current element
             while decreasing_stack and nums[decreasing_stack[-1]] >= nums[i]:
-                j = decreasing_stack.pop()
-                new_cost = current_cost + costs[j]
-                if new_cost < min_cost[j]:
-                    min_cost[j] = new_cost
-                    heappush(pq, (new_cost, j))
-
+                decreasing_stack.pop()
+            # If stack not empty, make a connection in graph
+            if decreasing_stack:
+                adjacency_list[i].append(decreasing_stack[-1])
             decreasing_stack.append(i)
 
-        return -1  # Should never reach here if there's always a valid path
+        # Dynamic Programming array to track minimum cost to reach each index
+        min_cost = [float('inf')] * n
+        min_cost[0] = 0  # Starting point has 0 cost
+
+        # Traverse and update costs using DP
+        for i in range(n):
+            for next_index in adjacency_list[i]:
+                min_cost[next_index] = min(min_cost[next_index], min_cost[i] + costs[next_index])
+
+        return min_cost[n - 1]  # Minimum cost to reach last index
